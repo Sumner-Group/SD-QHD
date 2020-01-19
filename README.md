@@ -3,7 +3,7 @@ This is C++ code that will compute electron trajectories in molecular orbitals u
 
 Included is a shell script that will assist in writing the input file. It requires the following information:
 
-electron mass (1 in atomic units); number of x grid points; number of y grid points; number of z grid points; range in x-drection; range in y-direction; range in z-direction (note these ranges are in atomic units and are the distance beyond the x,y, and z position of tha atoms); molecular orbital number; input file name for SD-QHD code; WFX file
+electron mass (1 in atomic units); number of x grid points; number of y grid points; number of z grid points; range in x-drection; range in y-direction; range in z-direction (note these ranges are in atomic units and are the distance beyond the x,y, and z position of the atoms); molecular orbital number; input file name for SD-QHD code; WFX file
 
 To create the input file:
 
