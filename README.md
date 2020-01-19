@@ -17,4 +17,15 @@ To run the code:
 
 ./sd-qhd-grid.exe < inputfile >& outputfile
 
-Sample inputs and outputs are given
+Sample inputs and outputs are given for the fluorine molecule molecula orbitals, calculated a the HF/aug-cc-pvqz level of theory using the Gaussian09 suite of programs.  
+
+Sample input is created from f2aug-cc-pvqz.wfx and sd-qhd-gridinput.script:
+
+F2-MO8.inp
+
+Sample outputs are:
+
+F2-MO.out
+
+==============Anticipated/Needed updates===========
+1. Currently the code does not have a single option to switch between computing full trajectories, or points on a grid. This should change.
