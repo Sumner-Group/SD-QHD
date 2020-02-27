@@ -1,0 +1,48 @@
+#!/bin/csh -f
+#
+echo "What is your mass?"
+set mass = $<
+echo " x grid points?"
+set  ngridx = $<
+echo " y grid points?"
+set  ngridy = $<
+echo " z grid points?"
+set  ngridz = $<
+echo "what is your xrange?"
+set xrange = $<
+echo "what is your yrange?"
+set yrange = $<
+echo "what is your zrange?"
+set zrange = $<
+echo "Which MO would you like?"
+set MO = $<
+echo "What is the name of the input file you're making?"
+set montecarloinput = $<
+echo "What is the name of your .wfx file?"
+set wfx = $<
+#
+#write mass; number of x, y, and z gridpoints; x, y, and z-range
+echo $mass $ngridx $ngridy $ngridz $xrange $yrange $zrange > $montecarloinput 
+#Number of Nuclei
+cat $wfx | sed -n '/Number of Nuclei/','/Number of Nuclei/'p | grep -iv number >> $montecarloinput
+#Number of basis functions per nuclei (nbasis[i])
+cat $wfx | sed -n '/Primitive Centers/','/Primitive Centers/'p | grep -iv primitive | awk '{for(i=1;i<=NF;i++) print $i}' | awk '{s=1;r=1;while(getline == 1){if($1 == r){ s+=1}else if($1!=r){print s;s=0;s+=1;r=$1}}print s}' >>$montecarloinput
+#CR we will likely delete this soon
+echo 1 >> $montecarloinput 
+# MO Coefficients cj[j]
+cat $wfx | sed -n '/Molecular Orbital Primitive Coefficients/','/Molecular Orbital Primitive Coefficients/'p | sed -n '/^ '$MO'$/','/<MO Number>/'p | grep '[0-9]\.[0-9]' >> $montecarloinput 
+#AO types (s,px,py,pz,dz2,etc) (lxj[i])
+#This will only work up through G-type functions
+#lx[j]
+cat $wfx | sed -n '/Primitive Types/','/Primitive Types/'p | grep -iv primitive | awk '{for(i=1;i<=NF;i++){if($i==2||$i==8||$i==9||$i==17||$i==18||$i==20||$i==26||$i==28||$i==34||$i==35){print 1}else if($i==5||$i==14||$i==15||$i==30||$i==31||$i==33){ print 2}else if($i==11||$i==24||$i==25){print 3}else if($i==21){print 4} else {print 0}}}' >> $montecarloinput 
+#ly[j]
+cat $wfx | sed -n '/Primitive Types/','/Primitive Types/'p | grep -iv primitive | awk '{for(i=1;i<=NF;i++){if($i==3||$i==8||$i==10||$i==14||$i==19||$i==20||$i==24||$i==29||$i==33||$i==35){print 1}else if($i==6||$i==16||$i==17||$i==30||$i==32||$i==34){ print 2}else if($i==12||$i==26||$i==27){print 3}else if($i==22){print 4} else {print 0}}}' >> $montecarloinput
+#lz[j]
+cat $wfx | sed -n '/Primitive Types/','/Primitive Types/'p | grep -iv primitive | awk '{for(i=1;i<=NF;i++){if($i==4||$i==9||$i==10||$i==15||$i==16||$i==20||$i==25||$i==27||$i==33||$i==34){print 1}else if($i==7||$i==18||$i==19||$i==31||$i==32||$i==35){ print 2} else if($i==13||$i==28||$i==29){print 3}else if($i==23){print 4} else {print 0}}}' >> $montecarloinput
+#Atomic cartesian coordinates (xr[j] yr[j] zr[j])
+#These are in bohr
+cat $wfx | sed -n '/Nuclear Cartesian Coordinates/','/Nuclear Cartesian Coordinates/'p | grep -iv cartesian >>  $montecarloinput
+#Basis function exponents (hj[k])
+cat $wfx | sed -n '/Primitive Exponents/','/Primitive Exponents/'p | grep -iv exponents >> $montecarloinput
+#
+
