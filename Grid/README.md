@@ -20,11 +20,11 @@ Sample inputs and outputs are given for the fluorine molecule molecula orbitals,
 
 Sample input is created from f2aug-cc-pvqz.wfx and sd-qhd-gridinput.script:
 
-F2-MO8.inp
+F2-MO8-grid.inp
 
 Sample outputs are:
 
-F2-MO.out
+F2-MO-grid.out
 
 ==============Anticipated/Needed updates===========
 1. Currently the code does not have a single option to switch between computing full trajectories, or points on a grid. This should change.
