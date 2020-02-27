@@ -60,7 +60,7 @@ double d2basis (int lxj,double hj,double x, double xr)
     return d2phi;
 }
 
-double lamdba (double m, double fx,double fy,double fz, double fxx, double fyy, double fxy, double vx, double vy)
+double lambda (double m, double fx,double fy,double fz, double fxx, double fyy, double fxy, double vx, double vy)
 {
   //Lagrange multiplier
   double lamd;
@@ -86,33 +86,6 @@ double energy (double m, double vx,double vy)
  return ene;
 }
 
-double distance (double xi, double xf, double yi, double yf,double zi,double zf)
-{
-  //Calculates the distance 
-  double d,dummy1,dummy2,dummy3,dummy4;
-  dummy1= (xf-xi)*(xf-xi);
-  dummy2=(yf-yi)*(yf-yi);
-  dummy3= (zf-zi)*(zf-zi);
-  dummy4=dummy1+dummy2+dummy3;
-  d=sqrt(dummy4);
-  return d;
-}
-
-double dotproduct (double vxi,double vx, double vyi, double vy)
-{
-  //Calclates the dot product
-  double dot,dum1,dum2,dum3,dum4,dum5,dum6;
-  dum1= (vxi*vx)+(vyi*vy);
-  dum2= (vxi*vxi)+(vyi*vyi);
-  dum3= sqrt(dum2);
-   dum4= (vx*vx)+(vy*vy);
-  dum5= sqrt(dum4);
-  dum6= dum3*dum5;
-  dot= dum1/dum6;
-  return dot;
-}
-
-
 int main ()
 
 {
@@ -120,7 +93,7 @@ int main ()
   double maxx,minx,maxy,miny,maxz,minz,dx,dy,dz,x0,y0,z0,lam;
   int n=0, j,k,* lxj,* lyj,* lzj,* nbasis ,natom,ntotbasis,l,* ncount,ndum,numtraj,n1,ifrev,i,dummy, xcount,ycount,zcount,ngridx,ngridy,ngridz,ifgrid;
 
-  //Read inut file
+  //Read input file
   cin >> m;
 
   cin >> ngridx;
@@ -151,7 +124,7 @@ int main ()
       
     }
 
-  //Read in coefficient, anglular momentum and exponent of Gaussian basis function
+  //Read in coefficient, angular momentum and exponent of Gaussian basis function
   cj = new double[ntotbasis];
   lxj = new int[ntotbasis];
   lyj = new int[ntotbasis];
@@ -304,7 +277,7 @@ int main ()
     e = energy (m, vx,vy);
     
     //Lagrange multiplier
-    lam = lamdba(m, fx,fy,fz, fxx, fyy, fxy, vx, vy);
+    lam = lambda(m, fx,fy,fz, fxx, fyy, fxy, vx, vy);
     
     //print out information
     printf ("position: %8.6f %8.6f %8.6f velocity: %8.6f %8.6f energy %8.6f wfn %14.12f lambda %8.6f force %8.6f %8.6f\n", x, y, z, vx, vy, e, 1.0/inpsi,lam,lam*fx,lam*fy);
