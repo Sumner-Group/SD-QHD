@@ -220,7 +220,9 @@ int main ()
     }
   
   //Set seed for random number generator
-  srand (1);
+  //for reproducability, use srand(1)
+  srand(time(NULL));
+  //srand (1);
   //Loop over starting points
   for (n1=0; n1<numtraj; n1++)
     {
@@ -419,7 +421,7 @@ int main ()
 	  a0y= lam*fy/m;
 
 	  e = energy (m, vx,vy);
-	  if(n%10==0){
+	  if(n%10==0&&j>2){
 	    printf ("position: %8.6f %8.6f %8.6f velocity: %8.6f %8.6f energy %8.6f wfn %14.12f lambda %8.6f force %8.6f %8.6f\n", x, y, z, vx, vy, e, 1.0/inpsi,lam,lam*fx,lam*fy);
 	  }
 
