@@ -21,4 +21,5 @@ Sample outputs are:
 F2-MO8-monte.out
 
 =========Important Note==========
+
 To replicate the output, change the seed for the random number generator to 1. See lines 224 and 225 in the code
